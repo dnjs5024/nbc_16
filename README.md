@@ -35,21 +35,23 @@ http://52.1.240.211:8080/swagger
 
 ## 프로젝트 구조(개요)
 
+```text
 nbc_16/
 ├─ nbc16/
 │  └─ src/
 │     ├─ main/java/...
-│     │  ├─ common/config/SecurityConfig.java   # 보안 설정
-│     │  ├─ common/filter/SecurityFilter.java   # (사용 시) 커스텀 보안 필터
-│     │  ├─ domain/user/...                     # User, UserRole(ADMIN/USER), Repository
-│     │  ├─ api/auth/...                        # 인증/회원가입 컨트롤러
-│     │  ├─ api/user/...                        # 사용자 조회 컨트롤러
-│     │  └─ api/admin/...                       # 관리자 전용(권한 변경 등)
+│     │  ├─ common/config/SecurityConfig.java
+│     │  ├─ common/filter/SecurityFilter.java
+│     │  ├─ domain/user/...
+│     │  ├─ api/auth/...
+│     │  ├─ api/user/...
+│     │  └─ api/admin/...
 │     └─ main/resources/
 │        ├─ application.yml
 │        ├─ application-local.yml
 │        └─ application-prod.yml
 └─ README.md
+
 
 ## 보안/권한 정책
 
