@@ -23,11 +23,3 @@ Spring Boot 기반의 인증/회원/권한(ADMIN/USER) 예제를 포함한 API �
 
 ## 프로젝트 구조(개요)
 
-nbc16/
-├─ src/main/java/...
-│ ├─ common/config/SecurityConfig.java # 시큐리티 설정 (/auths/, /login/ 허용, /admin/** ROLE_ADMIN)
-│ ├─ common/filter/SecurityFilter.java # (있는 경우) 인증/예외 필터 훅
-│ ├─ domain/user/... # User, UserRole(ADMIN/USER) 등
-│ └─ ... # Controller/Service/Repository
-└─ src/main/resources/
-├─ application.yml # 공통 설정
