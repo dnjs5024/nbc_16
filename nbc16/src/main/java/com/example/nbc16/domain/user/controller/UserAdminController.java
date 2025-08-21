@@ -31,7 +31,7 @@ public class UserAdminController {
 
 	@Operation(
 		summary = "관리자 권한 부여",
-		description = "관리자 권한이 있는 아이디로 일반 유저에게 관리자 권한 부여 가능 관리자 권한만 접근 가능",
+		description = "JWT 토큰 필요 관리자 권한이 있는 아이디로 일반 유저에게 관리자 권한 부여 가능 관리자 권한만 접근 가능",
 		tags = {"User API"}
 	)
 	@ApiResponses({
