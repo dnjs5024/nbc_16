@@ -10,6 +10,15 @@ Spring Boot 기반의 인증/회원/권한(ADMIN/USER) 예제를 포함한 API �
 
 http://52.1.240.211:8080/swagger
 
+테스트 순서
+1. 관리자 회원가입
+2. 유저 회원가입
+3. 관리자 로그인
+4. 토큰 넣기 우측 상단
+<img width="1498" height="349" alt="image" src="https://github.com/user-attachments/assets/621a2855-3c28-4603-b221-89168eebe384" />
+5. 유저 회원에 권한 부여
+
+
 ## 기술 스택
 
 - Language: Java 17+
