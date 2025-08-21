@@ -23,14 +23,28 @@ public class SecurityConfig {
 	private final SecurityFilter securityFilter;
 	// todo : 예외 핸들러
 
+	private static final String[] PUBLIC_URIS = {
+		"/auths/**",
+		"/login/**",
+		"/h2-console",
+		"/h2-console/*",
+		"/swagger",
+		"/swagger-ui.html",
+		"/swagger-ui/**",
+		"/api-docs/**"
+	};
+
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
+			.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+			.headers(h -> h.frameOptions(f -> f.sameOrigin()))
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(
 				auth -> auth
-					.requestMatchers("/auths/**", "/login/**", "/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs/**"   )
+					.requestMatchers(PUBLIC_URIS)
 					.permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest()

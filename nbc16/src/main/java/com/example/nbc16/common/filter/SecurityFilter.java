@@ -32,10 +32,8 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 	private final JwtUtil jwtUtil;
 	private static final List<String> SKIP_PATHS = List.of(
-		"/auths",
-		"/oauth2",
-		"/login/oauth2/code",
-		"/oauth2/authorization");
+		"/auths"
+);
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
