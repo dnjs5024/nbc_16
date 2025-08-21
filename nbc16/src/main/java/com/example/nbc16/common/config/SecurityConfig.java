@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.nbc16.common.exception.JsonAccessDeniedHandler;
 import com.example.nbc16.common.filter.SecurityFilter;
 
 @Configuration
@@ -36,9 +37,8 @@ public class SecurityConfig {
 
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, JsonAccessDeniedHandler accessDeniedHandler) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
-			.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
 			.headers(h -> h.frameOptions(f -> f.sameOrigin()))
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -55,6 +55,12 @@ public class SecurityConfig {
 				.logoutSuccessHandler((request, response, authentication) -> response
 					.setStatus(HttpServletResponse.SC_OK)
 				)
+			)
+			.exceptionHandling(exceptions -> exceptions
+				.authenticationEntryPoint((request, response, authException) -> {
+					response.sendError(401, "Unauthorized: " + authException.getMessage());
+				})
+				.accessDeniedHandler(accessDeniedHandler)
 			)
 			.addFilterBefore(securityFilter,
 				UsernamePasswordAuthenticationFilter.class); // 기존 필터보다 내가 커스텀한 필터를 앞에 놓기 위해 사용

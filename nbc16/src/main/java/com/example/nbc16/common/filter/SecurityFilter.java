@@ -55,13 +55,13 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 				Claims claim = jwtUtil.extractClaims(token);
 
-				Long userId = Long.parseLong(claim.getId());
-				String email = claim.get("email", String.class);
+				Long userId = Long.parseLong(claim.getSubject());
+				String name = claim.get("name", String.class);
 				String userRole = claim.get("userRole", String.class);
 
 				List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userRole));
 
-				CustomUserDetails customUserDetails = new CustomUserDetails(userId, email, authorities);
+				CustomUserDetails customUserDetails = new CustomUserDetails(userId, name, authorities);
 
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 					customUserDetails,
@@ -72,17 +72,18 @@ public class SecurityFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (SecurityException | MalformedJwtException e) {
-			log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.", e);
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않는 JWT 서명입니다.");
+			return;
 		} catch (ExpiredJwtException e) {
-			log.error("Expired JWT token, 만료된 JWT token 입니다.", e);
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "만료된 JWT 토큰입니다.");
+			return;
 		} catch (UnsupportedJwtException e) {
-			log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.", e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "지원되지 않는 JWT 토큰입니다.");
+			return;
 		} catch (Exception e) {
 			log.error("Internal server error", e);
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return;
 		}
 		filterChain.doFilter(request, response);
 	}

@@ -19,21 +19,21 @@ jwt 토큰을 만들기 위해 사용자 내용을 담은 객제 -> dto
 public class CustomUserDetails implements UserDetails{
 
 	private final Long userId;
-	private final String email;
+	private final String name;
 	private final List<SimpleGrantedAuthority> authorities;
 	private Map<String, Object> attributes;
 
-	public CustomUserDetails(Long userId, String email, List<SimpleGrantedAuthority> authorities)
+	public CustomUserDetails(Long userId, String name, List<SimpleGrantedAuthority> authorities)
 	{
 		this.userId = userId;
-		this.email = email;
+		this.name = name;
 		this.authorities = authorities;
 	}
 
-	public CustomUserDetails(Long userId, String email, List<SimpleGrantedAuthority> authorities, Map<String, Object> attributes)
+	public CustomUserDetails(Long userId, String name, List<SimpleGrantedAuthority> authorities, Map<String, Object> attributes)
 	{
 		this.userId = userId;
-		this.email = email;
+		this.name = name;
 		this.authorities = authorities;
 		this.attributes = attributes;
 	}
@@ -50,7 +50,7 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return email;
+		return name;
 	}
 
 	@Override

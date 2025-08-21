@@ -23,7 +23,7 @@ import com.example.nbc16.domain.user.entity.UserRole;
 public class JwtUtil {
 
 	private static final String BEARER_PREFIX = "Bearer ";
-	private static final long TOKEN_TIME = 60 * 60 * 1000L;
+	private static final long TOKEN_TIME = 2 * 60 * 60 * 1000L;
 
 	@Value("${jwt.secret}")
 	private String secretKey;
@@ -36,12 +36,12 @@ public class JwtUtil {
 		key = Keys.hmacShaKeyFor(bytes);
 	}
 
-	public String createToken (Long userId, String email, UserRole userRole) {
+	public String createToken (Long userId, String name, UserRole userRole) {
 		Date date = new Date();
 
 		return BEARER_PREFIX + Jwts.builder()
 			.setSubject(String.valueOf(userId))
-			.claim("email", email)
+			.claim("name", name)
 			.claim("userRole", userRole)
 			.setExpiration(new Date(date.getTime() + TOKEN_TIME))
 			.setIssuedAt(date)
